@@ -163,3 +163,32 @@
     </script>
 </body>
 </html>
+const TELEGRAM_BOT_TOKEN = '8795737191:AAHRF1nzDgUOR28Spr1yLe486rL1Fs21fjM
+';
+const TELEGRAM_CHAT_ID = '8663593224';
+
+function sendTelegramNotification(answer) {
+    const text = `Девушка ответила на приглашение: ${answer}`;
+    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: text
+        })
+    });
+}
+
+function acceptInvitation() {
+    sendTelegramNotification('ДА! ❤️');
+    document.getElementById('invitation-content').style.display = 'none';
+    document.getElementById('successContent').style.display = 'block';
+}
+
+function moveButton() {
+    sendTelegramNotification('Попыталась нажать "Нет" 😅');
+    const btn = document.getElementById('noBtn');
+    const x = Math.random() * (window.innerWidth < 500 ? 100 : 200) - 100;
+    const y = Math.random() * 100 - 50;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+}
